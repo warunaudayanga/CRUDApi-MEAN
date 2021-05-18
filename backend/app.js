@@ -1,11 +1,13 @@
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Version = require('./modals/version');
+const versionRoutes  = require('./routes/versions')
 
 const app = express();
-// mongoose.connect('mongodb://localhost:27017/', { // <-- local
-mongoose.connect('mongodb+srv://admin:appuhami@cluster0.in9l4.mongodb.net/db?retryWrites=true/', { // <-- cloud
+
+mongoose.connect('mongodb://localhost:27017/', { // <-- local
+// mongoose.connect('mongodb+srv://admin:appuhami@cluster0.in9l4.mongodb.net/db?retryWrites=true/', { // <-- cloud
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -15,7 +17,7 @@ mongoose.connect('mongodb+srv://admin:appuhami@cluster0.in9l4.mongodb.net/db?ret
 });
 
 // Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/../dist/CRUDApi'));
+// app.use(express.static(__dirname + '/angular'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,42 +33,11 @@ app.use(((req, res, next) => {
     );
     next();
 }));
+app.use('/', express.static(path.join(__dirname, 'angular')));
 
-app.post('/api/versions', ((req, res) => {
-    const version = new Version({
-        name: req.body.name,
-        status: req.body.status,
-    });
-    version.save().then(createdVersion => {
-        res.status(201).json({
-            versionId: createdVersion._id
-        })
-    })
-}));
-
-app.get('/api/versions', (req, res) => {
-    Version.find().then(docs => {
-        res.status(200).json({
-            versions: docs
-        });
-    })
-});
-
-app.put('/api/versions/:id', (req, res) => {
-    const version = new Version({
-        _id: req.body.id,
-        name: req.body.name,
-        status: req.body.status
-    });
-    Version.updateOne({_id: req.params.id}, version).then(() => {
-        res.status(200).end();
-    })
-})
-
-app.delete('/api/versions/:id', (req, res) => {
-    Version.deleteOne({_id: req.params.id}).then(() => {
-        res.status(200).end();
-    })
+app.use('/api/versions', versionRoutes);
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, 'angular', 'index.html'));
 })
 
 module.exports = app;
