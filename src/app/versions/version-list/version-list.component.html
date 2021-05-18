@@ -1,0 +1,11 @@
+<mat-action-list *ngFor="let version of versions">
+    <mat-list-item>
+        <span fxFlex>{{version.name}}</span>
+        <button mat-icon-button mat-raised-button (click)="editVersion(version)">
+            <fa-icon [icon]="faPen" size="lg" fxLayoutAlign="center center"></fa-icon>
+        </button>
+        <button mat-icon-button mat-raised-button color="warn" (click)="deleteVersion(version.id)">
+            <fa-icon [icon]="faTrash" size="lg" fxLayoutAlign="center center"></fa-icon>
+        </button>
+    </mat-list-item>
+</mat-action-list>

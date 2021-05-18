@@ -1,0 +1,9 @@
+<mat-toolbar color="primary" fxLayout="row" fxLayoutGap="5px">
+    <span class="home" routerLink="/" fxFlex>Version</span>
+    <button mat-icon-button (click)="createVersion()">
+        <fa-icon [icon]="faPlus" size="2x" fxLayoutAlign="center center"></fa-icon>
+    </button>
+    <button routerLink="list" routerLinkActive="mat-accent mat-raised-button" mat-icon-button>
+        <fa-icon [icon]="faBars" size="2x" fxLayoutAlign="center center"></fa-icon>
+    </button>
+</mat-toolbar>
