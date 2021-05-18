@@ -6,8 +6,7 @@ const versionRoutes  = require('./routes/versions')
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/', { // <-- local
-// mongoose.connect('mongodb+srv://admin:appuhami@cluster0.in9l4.mongodb.net/db?retryWrites=true/', { // <-- cloud
+mongoose.connect('mongodb+srv://admin:appuhami@cluster0.in9l4.mongodb.net/db?retryWrites=true/', { // <-- cloud
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
