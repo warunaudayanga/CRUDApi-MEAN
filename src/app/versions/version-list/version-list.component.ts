@@ -6,24 +6,25 @@ import {faPen, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {VersionCreateDialogComponent} from "../version-create-dialog/version-create-dialog.component";
 import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
+import {DialogData} from "../version-create-dialog/dialog-data.modal";
 
 @Component({
     selector: 'app-version-list',
     templateUrl: './version-list.component.html',
-    styleUrls: ['./version-list.component.scss']
+    styles: [
+        '.mat-list-base:not(:first-child) {padding: 0}',
+        'mat-list-item button {margin-left: 10px}'
+    ]
 })
 export class VersionListComponent implements OnInit, OnDestroy {
 
-    faPen: IconDefinition = faPen
-    faTrash: IconDefinition = faTrash
+    faPen: IconDefinition = faPen;
+    faTrash: IconDefinition = faTrash;
     versions: Version[] = [];
 
     private versionSubscription: Subscription;
 
-    constructor(
-        public dialog: MatDialog,
-        private vService: VersionService
-    ) {
+    constructor(public dialog: MatDialog, private vService: VersionService) {
         this.versionSubscription = vService.getVersionUpdatedListener()
             .subscribe((versions: Version[]) => {
                 this.versions = versions;
@@ -35,13 +36,14 @@ export class VersionListComponent implements OnInit, OnDestroy {
     }
 
     editVersion(version: Version): void {
+        const data: DialogData = {name: version.name, status: version.status};
         const dialogRef: MatDialogRef<VersionCreateDialogComponent> = this.dialog.open(VersionCreateDialogComponent, {
-            data: {name: version.name}
+            data: data
         });
 
-        dialogRef.afterClosed().subscribe(versionName => {
-            if(versionName !== undefined) {
-                this.vService.editVersion(version.id, versionName);
+        dialogRef.afterClosed().subscribe((data: DialogData) => {
+            if(data !== undefined) {
+                this.vService.editVersion(version.id, data.name, data.status);
             }
         });
     }

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: '<app-nav-bar></app-nav-bar><router-outlet></router-outlet>'
 })
 export class AppComponent {
-  title = 'CRUDApi';
+    constructor(private titleService: Title) {
+        titleService.setTitle('CRUD Sample');
+    }
 }

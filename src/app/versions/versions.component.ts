@@ -5,8 +5,8 @@ import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-versions',
-    templateUrl: './versions.component.html',
-    styleUrls: ['./versions.component.scss']
+    template: '<mat-card *ngIf="lastVersion !== null">Last Version is: {{lastVersion.name}}</mat-card>',
+    styles: ['mat-card {margin: 20px !important}']
 })
 export class VersionsComponent implements OnInit {
 

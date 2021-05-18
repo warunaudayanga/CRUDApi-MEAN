@@ -1,19 +1,18 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {DialogData} from "./dialog-data.modal";
 
-export interface DialogData {
-    name: string;
-}
 @Component({
     selector: 'app-version-create-dialog',
     templateUrl: './version-create-dialog.component.html',
-    styleUrls: ['./version-create-dialog.component.scss']
+    styles: ['mat-slide-toggle {margin: 8px 0; display: block;}']
 })
 export class VersionCreateDialogComponent {
 
     versionForm: FormGroup = new FormGroup({
-        name: new FormControl(this.data.name, Validators.required)
+        name: new FormControl(this.data.name, Validators.required),
+        status: new FormControl(this.data.status)
     });
 
     constructor(
@@ -26,6 +25,7 @@ export class VersionCreateDialogComponent {
     }
 
     onOKClick(): void {
-        if(this.versionForm.valid) this.dialogRef.close(this.versionForm.value.name);
+        const data: DialogData = {name: this.versionForm.value.name, status: this.versionForm.value.status}
+        if(this.versionForm.valid) this.dialogRef.close(data);
     }
 }

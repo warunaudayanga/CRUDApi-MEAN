@@ -1,6 +1,6 @@
 <mat-action-list *ngFor="let version of versions">
     <mat-list-item>
-        <span fxFlex>{{version.name}}</span>
+        <span fxFlex>{{version.name}} [<small class="{{version.status? 'success': 'error'}}">{{version.status? 'Enabled': 'Disabled'}}</small>]</span>
         <button mat-icon-button mat-raised-button (click)="editVersion(version)">
             <fa-icon [icon]="faPen" size="lg" fxLayoutAlign="center center"></fa-icon>
         </button>

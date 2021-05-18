@@ -5,9 +5,11 @@
             <mat-label>Version Name</mat-label>
             <input matInput formControlName="name">
         </mat-form-field>
+
+        <mat-slide-toggle formControlName="status" color="primary">Status</mat-slide-toggle>
     </form>
 </div>
 <div mat-dialog-actions fxFlexAlign="end">
-    <button mat-button mat-raised-button (click)="onNoClick()">Cancel</button>
-    <button mat-button mat-raised-button color="primary" [disabled]="!versionForm.valid"  [mat-dialog-close]="versionForm.value.name">Ok</button>
+    <button mat-button mat-raised-button (click)="onNoClick()">CANCEL</button>
+    <button mat-button mat-raised-button color="primary" [disabled]="!versionForm.valid"  (click)="onOKClick()">OK</button>
 </div>

@@ -13,6 +13,7 @@ import { VersionsComponent } from './versions/versions.component';
 import { VersionCreateDialogComponent } from './versions/version-create-dialog/version-create-dialog.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
         MaterialModule,
         FontAwesomeModule,
         FlexModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule
     ],
   providers: [{provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
   bootstrap: [AppComponent]
