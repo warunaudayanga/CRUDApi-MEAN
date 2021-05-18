@@ -42,7 +42,6 @@ export class VersionService {
         this.http.post<{versionId: string}>(this.apiUrl, version)
             .subscribe(responseData => {
                 version.id = responseData.versionId;
-                console.log(version);
                 this.versions.push(version);
                 this.versionUpdated.next([...this.versions]);
                 this.snackBar.success('Version added successfully!');
