@@ -3,8 +3,9 @@ import {Title} from "@angular/platform-browser";
 import {AuthService} from "./auth/auth.service";
 
 @Component({
-  selector: 'app-root',
-  template: '<app-loading></app-loading><app-nav-bar></app-nav-bar><router-outlet></router-outlet>'
+    selector: 'app-root',
+    template: '<app-loading></app-loading><app-nav-bar></app-nav-bar><router-outlet></router-outlet>',
+    styles: ['']
 })
 export class AppComponent implements OnInit {
 

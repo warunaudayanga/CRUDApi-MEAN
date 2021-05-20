@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Version = require('../modals/version');
-const checkAuth = require('../middleware/check-auth')
+const checkAuth = require('../middlewares/check-auth')
 
 router.get('', (req, res) => {
     Version.find().then(docs => {
