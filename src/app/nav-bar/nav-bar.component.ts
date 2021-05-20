@@ -29,7 +29,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
         private authService: AuthService
     ) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
+        this.isAuthenticated = this.authService.getIsAuthenticated();
         this.authStatusSubscription = this.authService.getAuthStatusListener()
             .subscribe(isAuthenticated => {
                 this.isAuthenticated = isAuthenticated;
@@ -49,11 +50,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
         });
     }
 
-    logout() {
+    logout(): void {
         this.authService.logout();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.authStatusSubscription.unsubscribe();
     }
 }

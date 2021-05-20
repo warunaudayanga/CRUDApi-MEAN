@@ -46,7 +46,7 @@ export class SignupComponent implements OnInit {
         return null;
     }
 
-    onSubmit() {
+    onSubmit(): void {
         if(this.form.valid) {
             this.authService.createUser(this.form.value.email, this.form.value.password);
         }

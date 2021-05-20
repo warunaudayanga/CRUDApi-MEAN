@@ -51,7 +51,6 @@ export class VersionListComponent implements OnInit, OnDestroy {
         const dialogRef: MatDialogRef<VersionDialogComponent> = this.dialog.open(VersionDialogComponent, {
             data: data
         });
-
         dialogRef.afterClosed().subscribe((data: VersionDialogData) => {
             if(data !== undefined) {
                 this.vService.editVersion(version.id, data.name, data.status);

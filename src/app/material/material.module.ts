@@ -122,3 +122,5 @@ import { MatTableModule } from '@angular/material/table';
     ]
 })
 export class MaterialModule { }
+
+// Unwanted modules will be removed after development!

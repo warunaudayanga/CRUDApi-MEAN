@@ -20,15 +20,15 @@ export class AppService {
         this.loading.hide();
     }
 
-    public info(msg: string) {
+    public info(msg: string): void {
         this.snackBar.info(msg);
     }
 
-    public success(msg: string) {
+    public success(msg: string): void {
         this.snackBar.success(msg);
     }
 
-    public error(msg: string) {
+    public error(msg: string): void {
         this.snackBar.error(msg);
     }
 
