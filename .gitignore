@@ -43,3 +43,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/backend/angular/3rdpartylicenses.txt
+/backend/angular/favicon.ico
+/backend/angular/index.html
+/backend/angular/main.bf5cf708a9f119a01b19.js
+/backend/angular/polyfills.5dbc5bea3dcdfa401b0a.js
+/backend/angular/runtime.f4a11e2b938f61dcecb6.js
+/backend/angular/styles.fd4ae24f4289efaa30a6.css
