@@ -16,6 +16,7 @@ export class VersionsComponent implements OnInit {
     constructor(private vService: VersionService) { }
 
     ngOnInit(): void {
+        // Subscription for detect changes in versions
         this.versionSubscription = this.vService.getVersionUpdatedListener()
             .subscribe((versions: Version[]) => {
                 this.lastVersion = versions[versions.length - 1];

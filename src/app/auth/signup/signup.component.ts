@@ -29,8 +29,10 @@ export class SignupComponent implements OnInit {
         }, {validators: this.confirmPassword})
     }
 
+    // Custom validator for confirm password
     confirmPassword: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
         if(group.value.password != group.value.confirm) {
+            // Giving time initialize before setting error
             setTimeout(() => {
                 if(this.form.value.confirm.length > 0) {
                     this.form.controls.confirm.markAsDirty();
@@ -40,6 +42,7 @@ export class SignupComponent implements OnInit {
             })
             return {passwordMismatch: true}
         }
+        // Giving time initialize before setting error
         setTimeout(() => {
             this.form.controls.confirm.setErrors(null);
         })

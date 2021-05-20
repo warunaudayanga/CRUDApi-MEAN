@@ -15,6 +15,7 @@ export class AuthService {
     private apiUrl = environment.apiBaseUrl + '/api/auth';
     private token: string | null = null;
     private tokenTimer!: NodeJS.Timer;
+    // Listener for detect authentication status
     private authStatusListener: Subject<boolean> = new Subject<boolean>();
     private isAuthenticated: boolean = false;
 
@@ -27,6 +28,7 @@ export class AuthService {
     autoAuthUser(): void {
         const authInfo: AuthInfo | null = AuthService.getAuth();
         if(!authInfo) return;
+        // getting expiration time from localStorage for automatically login if still valid
         const expiresIn = authInfo.expirationDate.getTime() - new Date().getTime();
         if (expiresIn > 0) {
             this.token = authInfo.token;

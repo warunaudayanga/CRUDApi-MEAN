@@ -35,10 +35,12 @@ export class VersionListComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.isAuthenticated = this.authService.getIsAuthenticated();
+        // Subscription for detect authentication status changes
         this.authStatusSubscription = this.authService.getAuthStatusListener()
             .subscribe(isAuthenticated => {
                 this.isAuthenticated = isAuthenticated;
             });
+        // Subscription for detect changes to versions
         this.versionSubscription = this.vService.getVersionUpdatedListener()
             .subscribe((versions: Version[]) => {
                 this.versions = versions;
@@ -47,10 +49,13 @@ export class VersionListComponent implements OnInit, OnDestroy {
     }
 
     editVersion(version: Version): void {
+        // Data for populate dialog
         const data: VersionDialogOptions = {type: 'Update', name: version.name, status: version.status};
+        // Opening dialog
         const dialogRef: MatDialogRef<VersionDialogComponent> = this.dialog.open(VersionDialogComponent, {
             data: data
         });
+        // event after dialog is closed
         dialogRef.afterClosed().subscribe((data: VersionDialogData) => {
             if(data !== undefined) {
                 this.vService.editVersion(version.id, data.name, data.status);

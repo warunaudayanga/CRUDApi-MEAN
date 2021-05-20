@@ -13,6 +13,7 @@ export class AuthGuard implements CanActivate {
         private router: Router
     ) { }
 
+    // Router guard for urls (currently not needed but added for future usage)
     canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

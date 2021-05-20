@@ -38,11 +38,14 @@ export class NavBarComponent implements OnInit, OnDestroy {
     }
 
     createVersion(): void {
+        // Data for populate dialog
         const data: VersionDialogOptions = {type: 'Add', name: '', status: false}
+        // Opening dialog
         const dialogRef: MatDialogRef<VersionDialogComponent> = this.dialog.open(VersionDialogComponent, {
             data: data
         });
 
+        // event after dialog is classed
         dialogRef.afterClosed().subscribe((data: VersionDialogData) => {
             if(data !== undefined) {
                 this.vService.addVersion(data.name, data.status);

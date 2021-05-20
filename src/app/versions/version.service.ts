@@ -20,6 +20,7 @@ export class VersionService {
         private app: AppService
     ) {
         app.showLoading();
+        // Fetching version data when initializing service
         http.get<{ versions: any }>(this.apiUrl)
             .pipe(map(versionData => {
                 return versionData.versions.map((version: any) => {
@@ -42,6 +43,7 @@ export class VersionService {
     }
 
     getVersions(): void {
+        // Sending fetched data via triggering event
         this.versionUpdated.next([...this.versions]);
     }
 
