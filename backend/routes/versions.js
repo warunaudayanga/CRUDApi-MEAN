@@ -4,11 +4,17 @@ const Version = require('../modals/version');
 const checkAuth = require('../middlewares/check-auth')
 
 router.get('', (req, res) => {
-    Version.find().then(docs => {
-        res.status(200).json({
-            versions: docs
-        });
-    })
+    Version.find()
+        .then(docs => {
+            res.status(200).json({
+                versions: docs
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            })
+        })
 });
 
 
@@ -17,11 +23,17 @@ router.post('', checkAuth, ((req, res) => {
         name: req.body.name,
         status: req.body.status,
     });
-    version.save().then(createdVersion => {
-        res.status(201).json({
-            versionId: createdVersion._id
+    version.save()
+        .then(createdVersion => {
+            res.status(201).json({
+                versionId: createdVersion._id
+            })
         })
-    })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            })
+        })
 }));
 
 router.put('/:id', checkAuth, (req, res) => {
@@ -30,15 +42,28 @@ router.put('/:id', checkAuth, (req, res) => {
         name: req.body.name,
         status: req.body.status
     });
-    Version.updateOne({_id: req.params.id}, version).then(() => {
-        res.status(200).end();
-    })
+    Version.updateOne({_id: req.params.id}, version)
+        .then(() => {
+            res.status(200).end();
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            })
+        })
 })
 
 router.delete('/:id', checkAuth, (req, res) => {
-    Version.deleteOne({_id: req.params.id}).then(() => {
-        res.status(200).end();
-    })
+    Version.deleteOne({_id: req.params.id})
+        .then(() => {
+            res.status(200).end();
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            })
+        })
+
 })
 
 module.exports = router;

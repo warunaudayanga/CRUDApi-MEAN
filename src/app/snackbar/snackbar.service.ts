@@ -13,7 +13,7 @@ export class SnackbarService {
     }
 
     public info(msg: string): void {
-        this.snackBar.open(msg, '', {panelClass: 'bg-info'});
+        this.snackBar.open(msg, '', {panelClass: ['bg-info']});
     }
 
     public success(msg: string): void {

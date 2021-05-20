@@ -44,12 +44,17 @@ export class AuthService {
         const authData: AuthData = {email: email, password: password};
         this.app.showLoading();
         this.http.post<AuthData>(`${this.apiUrl}/signup`, authData)
-            .subscribe(response => {
-                console.log(response);
+            .subscribe(() => {
                 this.app.hideLoading();
+                this.app.success('Successfully signed up!')
+                let ignored = this.router.navigate(['/login']);
             }, error => {
+                if (error.error.error.errors.email.kind == 'unique') {
+                    this.app.error('Email already exists!');
+                } else {
+                    this.app.error('Error occurred while creating user!');
+                }
                 this.app.hideLoading();
-                console.log(error);
             });
     }
 
@@ -78,8 +83,12 @@ export class AuthService {
                 }
                 this.app.hideLoading();
             }, error => {
+                if(error.error.msg == 'invalid') {
+                    this.app.error('Invalid email or password!')
+                } else {
+                    this.app.error('Error occurred while trying to login!')
+                }
                 this.app.hideLoading();
-                console.log(error);
             });
     }
 

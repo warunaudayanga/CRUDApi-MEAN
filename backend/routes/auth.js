@@ -27,23 +27,25 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
+    let fetchedUser;
     User.findOne({email: req.body.email})
         .then(user => {
             if(!user) {
                 return res.status(401).json({
-                    error: 'authentication failed'
+                    msg: 'invalid'
                 })
             }
-            return {valid: bcrypt.compare(req.body.password, user.password), user: user}
+            fetchedUser = user;
+            return bcrypt.compare(req.body.password, user.password);
         })
         .then((result) => {
-            if(!result.valid) {
+            if(!result) {
                 return res.status(401).json({
-                    error: 'authentication failed'
+                    msg: 'invalid'
                 })
             }
             const token = jwt.sign(
-                {email: result.user.email, userId: result.user._id},
+                {email: fetchedUser.email, userId: fetchedUser._id},
                 authSecret,
                 {expiresIn: '1h'}
             )

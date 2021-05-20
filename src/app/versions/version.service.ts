@@ -35,9 +35,9 @@ export class VersionService {
                 // trigger update event
                 this.versionUpdated.next([...this.versions]);
                 app.hideLoading();
-            }, error => {
+            }, () => {
                 app.hideLoading();
-                console.log(error);
+                this.app.error('Error occurred while fetching data!');
             });
     }
 
@@ -57,8 +57,12 @@ export class VersionService {
                 this.app.hideLoading();
                 this.app.success('Version added successfully!');
             }, error => {
+                if (error.error.error.code == 11000) {
+                    this.app.error('Version name already exists!');
+                } else {
+                    this.app.error('Error occurred while adding!');
+                }
                 this.app.hideLoading();
-                console.log(error);
             });
     }
 
@@ -81,8 +85,12 @@ export class VersionService {
                 this.app.hideLoading();
                 this.app.success('Version updated successfully!');
             }, error => {
+                if (error.error.error.code == 11000) {
+                    this.app.error('Version name already exists!');
+                } else {
+                    this.app.error('Error occurred while updating!');
+                }
                 this.app.hideLoading();
-                console.log(error);
             });
     }
 
@@ -95,9 +103,9 @@ export class VersionService {
                 this.versionUpdated.next([...this.versions]);
                 this.app.hideLoading();
                 this.app.success('Version deleted successfully!');
-            }, error => {
+            }, () => {
+                this.app.error('Error occurred while deleting!');
                 this.app.hideLoading();
-                console.log(error);
             });
     }
 
