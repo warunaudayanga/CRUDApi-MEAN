@@ -31,7 +31,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@coreui/coreui",
+              "node_modules/@coreui/coreui/scss/coreui.scss",
               "src/styles.scss"
             ],
             "scripts": []
