@@ -4,9 +4,10 @@ import {VersionService} from "../version.service";
 import {Subscription} from "rxjs";
 import {faPen, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {VersionCreateDialogComponent} from "../version-create-dialog/version-create-dialog.component";
+import {VersionDialogComponent} from "../version-dialog/version-dialog.component";
 import {IconDefinition} from "@fortawesome/free-brands-svg-icons";
-import {DialogData} from "../version-create-dialog/dialog-data.modal";
+import {VersionDialogData, VersionDialogOptions} from "../version-dialog/dialog-data.modal";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
     selector: 'app-version-list',
@@ -22,26 +23,36 @@ export class VersionListComponent implements OnInit, OnDestroy {
     faTrash: IconDefinition = faTrash;
     versions: Version[] = [];
 
-    private versionSubscription: Subscription;
+    private authStatusSubscription!: Subscription;
+    private versionSubscription!: Subscription;
+    isAuthenticated: boolean = false;
 
-    constructor(public dialog: MatDialog, private vService: VersionService) {
-        this.versionSubscription = vService.getVersionUpdatedListener()
+    constructor(
+        public dialog: MatDialog,
+        private vService: VersionService,
+        private authService: AuthService
+    ) { }
+
+    ngOnInit(): void {
+        this.isAuthenticated = this.authService.getIsAuthenticated();
+        this.authStatusSubscription = this.authService.getAuthStatusListener()
+            .subscribe(isAuthenticated => {
+                this.isAuthenticated = isAuthenticated;
+            });
+        this.versionSubscription = this.vService.getVersionUpdatedListener()
             .subscribe((versions: Version[]) => {
                 this.versions = versions;
             });
-    }
-
-    ngOnInit(): void {
         this.vService.getVersions();
     }
 
     editVersion(version: Version): void {
-        const data: DialogData = {name: version.name, status: version.status};
-        const dialogRef: MatDialogRef<VersionCreateDialogComponent> = this.dialog.open(VersionCreateDialogComponent, {
+        const data: VersionDialogOptions = {type: 'Update', name: version.name, status: version.status};
+        const dialogRef: MatDialogRef<VersionDialogComponent> = this.dialog.open(VersionDialogComponent, {
             data: data
         });
 
-        dialogRef.afterClosed().subscribe((data: DialogData) => {
+        dialogRef.afterClosed().subscribe((data: VersionDialogData) => {
             if(data !== undefined) {
                 this.vService.editVersion(version.id, data.name, data.status);
             }
@@ -54,5 +65,6 @@ export class VersionListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.versionSubscription.unsubscribe();
+        this.authStatusSubscription.unsubscribe();
     }
 }

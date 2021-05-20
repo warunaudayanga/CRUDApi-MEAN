@@ -1,11 +1,12 @@
 <mat-action-list *ngFor="let version of versions">
     <mat-list-item>
         <span fxFlex>{{version.name}} [<small class="{{version.status? 'success': 'error'}}">{{version.status? 'Enabled': 'Disabled'}}</small>]</span>
-        <button mat-icon-button mat-raised-button (click)="editVersion(version)">
+        <button *ngIf="isAuthenticated" mat-icon-button mat-raised-button (click)="editVersion(version)">
             <fa-icon [icon]="faPen" size="lg" fxLayoutAlign="center center"></fa-icon>
         </button>
-        <button mat-icon-button mat-raised-button color="warn" (click)="deleteVersion(version.id)">
+        <button *ngIf="isAuthenticated" mat-icon-button mat-raised-button color="warn" (click)="deleteVersion(version.id)">
             <fa-icon [icon]="faTrash" size="lg" fxLayoutAlign="center center"></fa-icon>
         </button>
     </mat-list-item>
 </mat-action-list>
+<div *ngIf="versions.length == 0" class="m-5 text-center">No versions added yet!</div>

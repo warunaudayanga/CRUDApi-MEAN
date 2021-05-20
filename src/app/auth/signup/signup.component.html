@@ -1,0 +1,25 @@
+<div class="row"  fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="col-8 col-sm-4 col-md-4 col-lg-2" fxLayout="column" fxLayoutAlign="center center">
+        <mat-card-header>
+            <mat-card-title>Sign Up</mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-form-field class="d-block">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <mat-label>Confirm</mat-label>
+                <input matInput type="password" formControlName="confirm">
+            </mat-form-field>
+            <div fxLayout="row" fxLayoutAlign="space-evenly center">
+                <button routerLink="/login" mat-button mat-raised-button type="button">Login</button>
+                <button mat-button mat-raised-button color="primary" [disabled]="!form.valid" type="submit">Sign Up</button>
+            </div>
+        </form>
+    </mat-card>
+</div>

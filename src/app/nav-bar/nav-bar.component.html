@@ -1,9 +1,15 @@
 <mat-toolbar color="primary" fxLayout="row" fxLayoutGap="5px">
     <span class="home" routerLink="/" fxFlex>Version</span>
-    <button mat-icon-button (click)="createVersion()">
+    <button *ngIf="isAuthenticated" mat-icon-button (click)="createVersion()">
         <fa-icon [icon]="faPlus" size="2x" fxLayoutAlign="center center"></fa-icon>
     </button>
     <button routerLink="list" routerLinkActive="mat-accent mat-raised-button" mat-icon-button>
         <fa-icon [icon]="faBars" size="2x" fxLayoutAlign="center center"></fa-icon>
+    </button>
+    <button *ngIf="!isAuthenticated" routerLink="login" routerLinkActive="mat-accent mat-raised-button" mat-icon-button>
+        <fa-icon [icon]="faSignInAlt" size="2x" fxLayoutAlign="center center"></fa-icon>
+    </button>
+    <button *ngIf="isAuthenticated" mat-icon-button>
+        <fa-icon [icon]="faSignOutAlt" size="2x" fxLayoutAlign="center center" (click)="logout()"></fa-icon>
     </button>
 </mat-toolbar>

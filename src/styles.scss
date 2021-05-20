@@ -1,3 +1,6 @@
+@import "node_modules/@coreui/coreui";
+@import "theme";
+
 .success {
     color: #01a801;
 }
@@ -15,4 +18,7 @@
 .bg-info {
     background-color: #313131;
     color: white;
+}
+.row {
+    margin: 0;
 }

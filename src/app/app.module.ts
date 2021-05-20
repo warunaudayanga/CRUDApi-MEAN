@@ -10,10 +10,15 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {MaterialModule} from "./material/material.module";
 import {FlexModule} from "@angular/flex-layout";
 import { VersionsComponent } from './versions/versions.component';
-import { VersionCreateDialogComponent } from './versions/version-create-dialog/version-create-dialog.component';
+import { VersionDialogComponent } from './versions/version-dialog/version-dialog.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { SpinnerComponent } from './loading/spinner/spinner.component';
+import { LoadingComponent } from './loading/loading.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import {AuthInterceptor} from "./auth/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -21,7 +26,11 @@ import {HttpClientModule} from "@angular/common/http";
     VersionListComponent,
     NavBarComponent,
     VersionsComponent,
-    VersionCreateDialogComponent
+    VersionDialogComponent,
+    SpinnerComponent,
+    LoadingComponent,
+    LoginComponent,
+    SignupComponent
   ],
     imports: [
         BrowserModule,
@@ -33,7 +42,10 @@ import {HttpClientModule} from "@angular/common/http";
         ReactiveFormsModule,
         HttpClientModule
     ],
-  providers: [{provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
+  providers: [
+      {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+      {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
